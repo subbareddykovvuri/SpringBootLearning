@@ -1,0 +1,149 @@
+
+CRUD operations
+
+POST
+PUT
+GET
+PATCH
+DELETE
+
+put vs patch
+In put we have to send the whole data to update
+In patch only the changed field is sufficient to update
+
+-----------------------------------------
+
+REST supports multiple formats
+
+1.text/XML
+
+<employee>
+	<name>Subbareddy</name>
+</employee>
+
+2. application/json
+
+employee:{name:john}
+
+3.text/plain
+
+name=john
+
+
+
+---------------------------------------
+
+Spring MVC or Spring WEB
+
+spring-boot-starter-web
+
+@RestController
+@RequestMapping("/products")
+
+Controller
+Add Methods
+@GetMapping
+@PostMapping
+@PutMapping
+@DeleteMapping
+
+------------------------------------------
+
+create DB table 
+add sql server 
+
+use mydb
+
+create table product(
+	id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name varchar(20),
+	description varchar(20),
+	price int
+)
+
+select * from product;
+
+----------------------------------------
+
+Create new spring starter Project
+name:productRestApi
+maven,java,8,jar
+Spring Boot Version :2.0.6
+Dependencies: JPA,MySQL,Web
+
+-----------------------------------------
+Create a model class Product
+
+with id,name,description,price
+
+@Entity for class from javax.persistence.Entity
+@Id for primary Key
+@GeneratedValue(strategy=GenerationType.IDENTITY)
+
+-----------------------------------------
+Create a product Repository interface 
+which extends JPARepository
+
+1st Parameter Product
+2nd Parameter Integer
+
+------------------------------------------
+
+Create Controller
+
+/products GET
+
+New Class ProductController
+
+@RestController import org.springFramework.web.bind.annotstion.RestController;
+
+......................................
+Code
+
+@RestController
+public clas ProductRestController{
+
+@Autowired
+ProductRepository repository;
+
+@RequestMapping(value="/products/",method=RequestMethod.GET)
+public List<Product> getProducts(){
+return repository.findAll();
+}
+}
+..................................
+
+
+--------------------------------------------
+Get a single Product
+/products/{id}  GET
+
+findProductById(id)
+
+code
+................................
+@RestController
+public clas ProductRestController{
+
+@Autowired
+ProductRepository repository;
+
+@RequestMapping(value="/products/",method=RequestMethod.GET)
+public List<Product> getProducts(){
+return repository.findAll();
+}
+
+@RequestMapping(value="/products/{id}",method=RequestMethod.GET)
+public List<Product> getProduct(@PathVariablre("id") int id){
+return repository.findById(id).get();
+}
+
+
+}
+
+...........................................
+
+----------------------------------------------
+Create Product 
+
+
